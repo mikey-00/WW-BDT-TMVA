@@ -37,13 +37,47 @@ TheG BDT is trained using TMVA with:
 - Background efficiency: **4.9%**
 - Clear signal/background separation
 
+## Data Availability
+
+The ROOT (`.root`) files used in this analysis are not included in the repository due to their large size and standard data management practices in High Energy Physics.
+
+The repository contains:
+- All analysis and plotting scripts
+- TMVA configuration and trained BDT
+- Final plots
+- Full written report (PDF and LaTeX source)
+
+Users can reproduce the analysis by running the provided scripts on locally available ROOT files with the same tree structure.
+
+Detailed information about data access and required formats is available in [`DATA.md`](DATA.md).
+
+
 ## 📂 Repository Structure
-.
-├── train_tmva_bdt.py
-├── tmva_bdt.py
-├── plots/
-├── report/
-└── README.md
+WW-BDT-TMVA/
+│── scripts/
+│   ├── root_reduction.py
+│   ├── variable_calculation.py
+│   ├── train_tmva_bdt.py
+│   ├── tmva_bdt.py
+│   ├── plot_bdt_overlay.c
+│   ├── plot_bdt_stack.c
+│   └── plot_significance.c
+│
+│── plots/
+│   ├── BDT_signal_vs_background.png
+│   ├── BDT_stack.png
+│   └── significance_vs_cut.png
+│
+│── report/
+│   ├── WW_BDT_Report.pdf
+│   └── WW_BDT_Report.tex
+│
+│── docs/
+│   └── analysis_flow.png
+│
+│── DATA.md
+│── README.md
+│── .gitignore
 
 ## 🚀 How to Run
 
