@@ -1,0 +1,154 @@
+\documentclass[11pt,a4paper]{article}
+
+% ======================
+% Packages
+% ======================
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{physics}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+% ======================
+% Title
+% ======================
+\title{\textbf{Boosted Decision Tree Analysis for \\ WW Signal vs Top Background}}
+\author{Manan Makhija}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+% ======================
+\begin{abstract}
+A multivariate analysis based on Boosted Decision Trees (BDT) is performed to
+separate the $WW$ signal from dominant top-quark backgrounds using the TMVA
+framework. Signal and background discrimination is achieved using kinematic
+and event-level observables. The optimal BDT cut is determined by maximizing
+the statistical significance, and the final signal efficiency and background
+rejection are reported.
+\end{abstract}
+
+% ======================
+\section{Introduction}
+
+The production of $WW$ events at hadron colliders constitutes an important
+electroweak process and serves as both a signal and a background in many
+physics analyses. A major challenge in isolating the $WW$ signal arises from
+large backgrounds originating from top-quark processes, particularly
+$t\bar{t}$, $tW$, and $\bar{t}W$ production.
+
+Traditional cut-based analyses often fail to exploit correlations among
+kinematic variables. Multivariate techniques, such as Boosted Decision Trees
+(BDTs), provide superior discrimination power by combining multiple variables
+into a single classifier. In this work, a BDT-based analysis using the TMVA
+framework is presented.
+
+% ======================
+\section{Datasets and Variables}
+
+The analysis is performed using the following datasets:
+\begin{itemize}
+    \item $WW$ signal
+    \item $t\bar{t}$ background
+    \item $tW$ background
+    \item $\bar{t}W$ background
+\end{itemize}
+
+Each dataset is processed to include the BDT output score. The BDT is trained
+using the following input variables:
+
+\begin{itemize}
+    \item Leading and subleading lepton transverse momenta ($p_{T1}, p_{T2}$)
+    \item Lepton pseudorapidities ($\eta_1, \eta_2$)
+    \item Dilepton invariant mass ($m_{\ell\ell}$)
+    \item Dilepton transverse momentum ($p_{T}^{\ell\ell}$)
+    \item Azimuthal separation between leptons ($\Delta\phi_{\ell\ell}$)
+    \item Missing transverse momentum ($p_T^{\text{miss}}$)
+    \item Transverse masses ($m_{T1}, m_{T2}$)
+    \item Jet multiplicity ($n_{\text{Jet}}$)
+    \item $b$-jet multiplicity ($n_{\text{BJet}}$)
+\end{itemize}
+
+% ======================
+\section{BDT Output Distributions}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../plots/BDT_signal_vs_background.png}
+    \caption{Normalized BDT output distribution for $WW$ signal and top backgrounds.}
+    \label{fig:bdt_overlay}
+\end{figure}
+
+Figure~\ref{fig:bdt_overlay} shows the normalized BDT output distributions for
+the $WW$ signal and the combined top backgrounds. The signal distribution peaks
+at higher BDT values, while the background is concentrated near lower values,
+indicating effective separation.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../plots/BDT_stack.png}
+    \caption{Stacked BDT output distribution for individual background processes
+    compared with the $WW$ signal.}
+    \label{fig:bdt_stack}
+\end{figure}
+
+Figure~\ref{fig:bdt_stack} shows the stacked background composition compared
+with the signal. The $t\bar{t}$ process is the dominant background, with smaller
+contributions from $tW$ and $\bar{t}W$.
+
+% ======================
+\section{Cut Optimization and Significance}
+
+To determine the optimal BDT selection, the statistical significance
+$Z = \frac{S}{\sqrt{S+B}}$ is evaluated as a function of the BDT cut value, where
+$S$ and $B$ denote the number of signal and background events, respectively.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{../plots/significance_vs_cut.png}
+    \caption{Statistical significance as a function of the BDT cut value.}
+    \label{fig:significance}
+\end{figure}
+
+Figure~\ref{fig:significance} shows the significance as a function of the BDT
+cut. The optimal cut is found at:
+
+\begin{align}
+    \text{Optimal BDT cut} &= 0.66 \\
+    \text{Maximum significance} &= 408.7
+\end{align}    
+
+At the optimal cut, the signal and background efficiencies are:
+\begin{align}
+    \epsilon_S &= 0.681 \\
+    \epsilon_B &= 0.049
+\end{align}
+
+The final event yields after the BDT selection are:
+\begin{align}
+    S &= 315{,}144 \\
+    B &= 279{,}471
+\end{align}
+
+The corresponding Asimov significance is:
+\begin{equation}
+    Z_A = 517.3
+\end{equation}
+
+% ======================
+\section{Conclusion}
+
+A Boosted Decision Tree analysis using TMVA has been successfully implemented to
+separate the $WW$ signal from dominant top-quark backgrounds. The BDT classifier
+provides strong discrimination power, achieving high signal efficiency while
+suppressing background contributions. The optimized BDT cut significantly
+enhances the statistical significance compared to a cut-based approach. This
+study demonstrates the effectiveness of multivariate techniques in modern
+high-energy physics analyses.
+
+% ======================
+\end{document}

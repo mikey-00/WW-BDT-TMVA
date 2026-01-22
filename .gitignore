@@ -1,0 +1,68 @@
+# =========================
+# ROOT / HEP files
+# =========================
+*.root
+*.pcm
+*.d
+*.so
+TMVA.root
+dataset/
+weights/
+step_*/
+output/
+
+# =========================
+# TMVA generated files
+# =========================
+TMVAClassification.root
+TMVAClassification_BDT.weights.xml
+BDT.weights.xml
+
+# =========================
+# Python cache
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# =========================
+# Conda / virtual env
+# =========================
+bdt_env/
+env/
+venv/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# OS / Editor junk
+# =========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# =========================
+# Logs & temp
+# =========================
+*.log
+*.tmp
+*.out
+
+# =========================
+# Build artifacts
+# =========================
+build/
+dist/
+
+# =========================
+# Large data (NEVER commit)
+# =========================
+data/
+*.h5
+*.npz
