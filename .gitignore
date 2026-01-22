@@ -66,3 +66,4 @@ dist/
 data/
 *.h5
 *.npz
+git commit -m "Fix .gitignore and track scripts, docs, and report"
