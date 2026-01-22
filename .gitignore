@@ -1,69 +1,56 @@
 # =========================
-# ROOT / HEP files
+# ROOT / HEP generated files
 # =========================
 *.root
+*.so
 *.pcm
 *.d
-*.so
-TMVA.root
-dataset/
-weights/
-step_*/
-output/
+*.dll
+*.exe
+*.log
 
 # =========================
-# TMVA generated files
-# =========================
-TMVAClassification.root
-TMVAClassification_BDT.weights.xml
-BDT.weights.xml
-
-# =========================
-# Python cache
+# Python
 # =========================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# =========================
-# Conda / virtual env
-# =========================
-bdt_env/
+.venv/
 env/
-venv/
 
 # =========================
-# Jupyter
+# TMVA / Training outputs
 # =========================
-.ipynb_checkpoints/
+dataset/
+weights/
+TMVA.root
+
+# =========================
+# Build / temporary files
+# =========================
+build/
+tmp/
+.cache/
+*.tmp
 
 # =========================
 # OS / Editor junk
 # =========================
 .DS_Store
 Thumbs.db
-*.swp
-*.swo
-*~
+.vscode/
+.idea/
 
 # =========================
-# Logs & temp
+# Plots (ignore raw, keep final)
 # =========================
-*.log
-*.tmp
-*.out
+plots/*.pdf
+plots/*.root
 
 # =========================
-# Build artifacts
+# IMPORTANT: DO NOT IGNORE CODE
 # =========================
-build/
-dist/
-
-# =========================
-# Large data (NEVER commit)
-# =========================
-data/
-*.h5
-*.npz
-git commit -m "Fix .gitignore and track scripts, docs, and report"
+# scripts/        ← must be tracked
+# docs/           ← must be tracked
+# report/         ← must be tracked
