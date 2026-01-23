@@ -3,8 +3,7 @@ Multivariate BDT analysis for WW signal vs top backgrounds using ROOT TMVA
 
 # WW Signal vs Top Background Discrimination using BDT (TMVA)
 
-This repository contains a multivariate analysis using Boosted Decision Trees (BDTs)
-to separate WW signal events from dominant top-quark backgrounds.
+This repository contains a multivariate analysis using Boosted Decision Trees (BDTs) to separate WW signal events from dominant top-quark backgrounds.
 
 ## 🔬 Analysis Overview
 - Framework: ROOT TMVA
@@ -25,17 +24,17 @@ to separate WW signal events from dominant top-quark backgrounds.
 - b-jet multiplicity
 
 ## 🧠 Training
-TheG BDT is trained using TMVA with:
+The BDT is trained using TMVA with:
 - NTrees = 600
 - MaxDepth = 3
-- Gradient boosting
-- Bagging enabled
+- BoostType = Grad
+- UseBaggedBoost = True
 
 ## 📈 Results
 - Optimal BDT cut: **0.66**
 - Signal efficiency: **68%**
 - Background efficiency: **4.9%**
-- Clear signal/background separation
+- Strong separation between signal and background observed
 
 ## Data Availability
 
@@ -79,6 +78,18 @@ WW-BDT-TMVA/
 │── README.md
 │── .gitignore
 
+## 🔄 Analysis Workflow
+
+<p align="center">
+  <img src="docs/analysis_flow.png" alt="WW BDT Analysis Flow" width="750"/>
+</p>
+
+This figure summarizes the complete analysis pipeline used in this project:
+starting from CMS Open Data ntuples, feature selection and preprocessing, TMVA-based BDT training, application of the trained classifier to signal and background samples, and final optimization using the BDT score.
+
+The output of the BDT classifier and its performance are shown in
+Figures in the `plots/` directory, including the BDT score distribution, background composition stack, and significance optimization curve.
+
 ## 🚀 How to Run
 
 1. Train BDT:
@@ -89,7 +100,7 @@ python tmva_bdt.py
 
 3. Plot results using ROOT macros
 
-📌 Notes
+## 📌 Notes
 ROOT files are not included due to size.
 Analysis intended for educational and research demonstration.
 
