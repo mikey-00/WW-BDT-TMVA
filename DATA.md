@@ -1,51 +1,82 @@
-# Data Availability
+# Data Description and Availability
 
-This repository follows standard High Energy Physics (HEP) best practices regarding data management.
+## Overview
 
-## ROOT Files
+This project performs a multivariate analysis using Boosted Decision Trees (BDTs)
+to separate WW signal events from dominant top-quark backgrounds using the
+ROOT TMVA framework.
 
-The input datasets used in this analysis are stored in ROOT (`.root`) format and include:
+The analysis relies on Monte Carlo simulated datasets stored in ROOT (`.root`)
+format and structured as TTrees.
 
-- `ww_signal.root`
-- `ttbar_background.root`
-- `tw_top_background.root`
-- `tw_antitop_background.root`
-- Corresponding files with BDT scores (step_4)
+## Data Availability
 
-These ROOT files are **not included in the GitHub repository** due to:
+The ROOT input files used in this analysis are **not included** in this repository.
+
+This is due to:
 - Large file sizes
-- Storage and bandwidth limitations of GitHub
-- Common practice in experimental physics collaborations
+- Standard data handling practices in High Energy Physics
+- Dataset ownership and storage constraints
 
-## How to Obtain the Data
+Only analysis code, configuration files, plots, and documentation are provided.
 
-The ROOT files can be:
-- Generated locally by following the preprocessing and TMVA training scripts
-- Provided upon reasonable academic request
-- Replaced with equivalent datasets having the same tree structure and branch names
+## Datasets Used
 
-## Required Tree Structure
+The analysis uses the following Monte Carlo samples:
 
-All ROOT files must contain a TTree named:
+- **Signal**
+  - WW (diboson production)
 
-Events
+- **Backgrounds**
+  - ttbar ($t\bar{t}$)
+  - single top tW
+  - single anti-top $\bar{t}W$
 
+Each dataset is processed independently and later combined at the analysis level
+for training and evaluation.
 
-with the following branches (used for BDT evaluation):
+## Data Format Requirements
 
-- pt1, pt2
-- Lepton_eta0, Lepton_eta1
-- mll, ptll, dphill
-- PuppiMET_pt
-- mtw1, mtw2
-- nJet, nBJet
-- BDT_score (for post-TMVA analysis)
+To reproduce the analysis, the ROOT files must satisfy the following conditions:
+
+- Contain a TTree named consistently across samples
+- Include the following branches (or equivalent):
+
+  - Lepton kinematics:  
+    `pt1`, `pt2`, `eta1`, `eta2`
+  - Dilepton variables:  
+    `mll`, `ptll`, `dphill`
+  - Missing transverse energy:  
+    `PuppiMET_pt`
+  - Transverse masses:  
+    `mtw1`, `mtw2`
+  - Jet information:  
+    `nJet`, `nBJet`
+
+- Signal and background samples must use identical variable definitions and units
+
+## Preprocessing
+
+Before training:
+- Variables are checked for consistency and physical ranges
+- No event weights or cross-section normalization are applied
+- The analysis focuses on **relative efficiencies**, not absolute yields
 
 ## Reproducibility
 
-All analysis steps, plotting macros, and significance calculations are fully reproducible using:
-- The provided ROOT macros in `scripts/`
-- The trained TMVA weights
-- User-supplied ROOT files with the same structure
+Users can reproduce the analysis by:
+1. Providing ROOT files with the required tree structure and variables
+2. Running the training script:
+   ```bash
+   python train_tmva_bdt.py
+Applying the trained BDT:
 
-Final plots and numerical results are included in the repository.
+python tmva_bdt.py
+Generating plots using the provided ROOT macros
+
+Notes
+This dataset description is sufficient for academic evaluation and reproducibility
+
+The analysis is intended for educational and research demonstration purposes
+
+No proprietary or restricted data is distributed with this repository
