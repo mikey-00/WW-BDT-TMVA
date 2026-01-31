@@ -24,33 +24,34 @@
 
 % ======================
 \begin{abstract}
-A multivariate analysis based on Boosted Decision Trees (BDT) is performed to
-separate the $WW$ signal from dominant top-quark backgrounds using the TMVA
-framework. Signal and background discrimination is achieved using kinematic
-and event-level observables. The optimal BDT cut is determined by maximizing
-the statistical significance, and the final signal efficiency and background
-rejection are reported.
+A multivariate analysis using Boosted Decision Trees (BDTs) is performed to
+separate the $WW$ signal from dominant top-quark backgrounds using the
+TMVA framework. Multiple kinematic and event-level observables are combined
+into a single classifier. The performance of the BDT is evaluated using
+input variable distributions, correlation matrices, ROC curves, and
+overtraining checks. Signal and background efficiencies are reported for
+an optimized BDT selection.
 \end{abstract}
 
 % ======================
 \section{Introduction}
 
-The production of $WW$ events at hadron colliders constitutes an important
-electroweak process and serves as both a signal and a background in many
-physics analyses. A major challenge in isolating the $WW$ signal arises from
+The production of $WW$ events at hadron colliders is an important
+electroweak process and constitutes a background to many new physics
+searches. A major challenge in isolating the $WW$ signal arises from
 large backgrounds originating from top-quark processes, particularly
 $t\bar{t}$, $tW$, and $\bar{t}W$ production.
 
 Traditional cut-based analyses often fail to exploit correlations among
-kinematic variables. Multivariate techniques, such as Boosted Decision Trees
-(BDTs), provide superior discrimination power by combining multiple variables
-into a single classifier. In this work, a BDT-based analysis using the TMVA
-framework is presented.
+kinematic variables. Multivariate techniques such as Boosted Decision
+Trees (BDTs) combine multiple observables into a single discriminant and
+offer superior separation power. In this work, a BDT-based analysis using
+the ROOT TMVA framework is presented.
 
 % ======================
-\section{Datasets and Variables}
+\section{Datasets and Input Variables}
 
-The analysis is performed using the following datasets:
+The analysis uses the following Monte Carlo datasets:
 \begin{itemize}
     \item $WW$ signal
     \item $t\bar{t}$ background
@@ -58,8 +59,8 @@ The analysis is performed using the following datasets:
     \item $\bar{t}W$ background
 \end{itemize}
 
-Each dataset is processed to include the BDT output score. The BDT is trained
-using the following input variables:
+The BDT is trained using kinematic and event-level variables that are
+well motivated by the physics of $WW$ and top-quark production:
 
 \begin{itemize}
     \item Leading and subleading lepton transverse momenta ($p_{T1}, p_{T2}$)
@@ -74,81 +75,150 @@ using the following input variables:
 \end{itemize}
 
 % ======================
+\section{Input Variable Distributions}
+
+The distributions of the input variables for the training samples are
+shown in Figures~\ref{fig:input_vars_1} and~\ref{fig:input_vars_2}. Due to
+the large number of variables, the plots are split into two parts.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../plots/input_variable/input_variable_part1.png}
+    \caption{Input variable distributions used for BDT training (Part 1).}
+    \label{fig:input_vars_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{../plots/input_variable/input_variable_part2.png}
+    \caption{Input variable distributions used for BDT training (Part 2).}
+    \label{fig:input_vars_2}
+\end{figure}
+
+Variables related to jet and $b$-jet multiplicities show strong
+discrimination between signal and background, while kinematic variables
+provide additional separation through correlations exploited by the BDT.
+
+% ======================
+\section{Correlation Matrix}
+
+Correlations among the input variables are studied using the linear
+correlation matrix provided by TMVA. This allows identification of
+redundant variables and ensures that the BDT can effectively exploit
+non-linear correlations.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../plots/linear_correlation_coefficients/correlationmatrix_signal.png}
+    \caption{Linear correlation matrix of input variables for the training sample (signal).}
+    \label{fig:correlation_signal}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{../plots/linear_correlation_coefficients/correlationmatrix_background.png}
+    \caption{Linear correlation matrix of input variables for the training sample (background).}
+    \label{fig:correlation_background}
+\end{figure}
+
+Moderate correlations are observed among kinematic observables, while
+jet and $b$-jet multiplicities remain largely uncorrelated with most
+leptonic variables.
+
+% ======================
 \section{BDT Output Distributions}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{../plots/BDT_signal_vs_background.png}
-    \caption{Normalized BDT output distribution for $WW$ signal and top backgrounds.}
+    \caption{Normalized BDT output distribution for $WW$ signal and combined top backgrounds.}
     \label{fig:bdt_overlay}
 \end{figure}
 
-Figure~\ref{fig:bdt_overlay} shows the normalized BDT output distributions for
-the $WW$ signal and the combined top backgrounds. The signal distribution peaks
-at higher BDT values, while the background is concentrated near lower values,
-indicating effective separation.
+Figure~\ref{fig:bdt_overlay} shows the normalized BDT score distribution.
+The signal peaks at higher BDT values, while the background is
+concentrated at lower values, indicating good separation.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.75\textwidth]{../plots/BDT_stack.png}
-    \caption{Stacked BDT output distribution for individual background processes
-    compared with the $WW$ signal.}
+    \caption{Stacked BDT output distribution for individual background processes compared with the $WW$ signal.}
     \label{fig:bdt_stack}
 \end{figure}
 
-Figure~\ref{fig:bdt_stack} shows the stacked background composition compared
-with the signal. The $t\bar{t}$ process is the dominant background, with smaller
+The $t\bar{t}$ process is the dominant background, with smaller
 contributions from $tW$ and $\bar{t}W$.
 
 % ======================
-\section{Cut Optimization and Significance}
+\section{BDT Performance}
 
-To determine the optimal BDT selection, the statistical significance
-$Z = \frac{S}{\sqrt{S+B}}$ is evaluated as a function of the BDT cut value, where
-$S$ and $B$ denote the number of signal and background events, respectively.
+\subsection{ROC Curve}
+
+The performance of the classifier is quantified using the Receiver
+Operating Characteristic (ROC) curve, shown in
+Figure~\ref{fig:roc}. The ROC curve illustrates the trade-off between
+signal efficiency and background rejection.
+
+The area under the ROC curve (AUC) indicates strong overall classifier performance.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth]{../plots/significance_vs_cut.png}
-    \caption{Statistical significance as a function of the BDT cut value.}
-    \label{fig:significance}
+    \includegraphics[width=0.7\textwidth]{../plots/roc/roc_bdt.png}
+    \caption{ROC curve for the BDT classifier.}
+    \label{fig:roc}
 \end{figure}
 
-Figure~\ref{fig:significance} shows the significance as a function of the BDT
-cut. The optimal cut is found at:
+\subsection{Overtraining Check}
+
+An overtraining check is performed by comparing the BDT response for
+training and testing samples. Good agreement between the two
+distributions indicates that the classifier generalizes well.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../plots/overtraining/overtraining_check_bdt.png}
+    \caption{Overtraining check for the BDT classifier.}
+    \label{fig:overtraining}
+\end{figure}
+
+No significant overtraining is observed.
+
+% ======================
+\section{Variable Importance}
+
+TMVA provides a ranking of input variables based on their separation
+power. The most important variables are found to be the $b$-jet
+multiplicity and jet multiplicity, followed by missing transverse
+momentum and dilepton kinematics. This ranking is consistent with the
+physical expectation that top-quark backgrounds are enriched in
+$b$-jets relative to the $WW$ signal.
+
+% ======================
+\section{BDT Cut Optimization}
+
+The optimal BDT cut is determined by studying the signal and background
+efficiencies as a function of the BDT score. The selected working point
+is:
 
 \begin{align}
-    \text{Optimal BDT cut} &= 0.66 \\
-    \text{Maximum significance} &= 408.7
-\end{align}    
-
-At the optimal cut, the signal and background efficiencies are:
-\begin{align}
-    \epsilon_S &= 0.681 \\
-    \epsilon_B &= 0.049
+\text{BDT cut} &= 0.66 \\
+\epsilon_S &= 0.68 \\
+\epsilon_B &= 0.049
 \end{align}
 
-The final event yields after the BDT selection are:
-\begin{align}
-    S &= 315{,}144 \\
-    B &= 279{,}471
-\end{align}
-
-The corresponding Asimov significance is:
-\begin{equation}
-    Z_A = 517.3
-\end{equation}
+Since the samples are not normalized to physical cross sections, the
+analysis focuses on efficiencies rather than absolute signal
+significance.
 
 % ======================
 \section{Conclusion}
 
-A Boosted Decision Tree analysis using TMVA has been successfully implemented to
-separate the $WW$ signal from dominant top-quark backgrounds. The BDT classifier
-provides strong discrimination power, achieving high signal efficiency while
-suppressing background contributions. The optimized BDT cut significantly
-enhances the statistical significance compared to a cut-based approach. This
-study demonstrates the effectiveness of multivariate techniques in modern
-high-energy physics analyses.
+A Boosted Decision Tree analysis using TMVA has been successfully applied
+to separate $WW$ signal events from dominant top-quark backgrounds. The
+BDT exploits both kinematic and event-level variables and demonstrates
+strong discrimination power. The classifier performance has been
+validated using input variable studies, correlation matrices, ROC
+curves, and overtraining checks. This work highlights the effectiveness
+of multivariate techniques in modern high-energy physics analyses.
 
-% ======================
 \end{document}
